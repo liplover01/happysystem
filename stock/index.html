@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Happy</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Cedarville+Cursive&family=Abril+Fatface&family=Mitr&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            font-family: 'Mitr', sans-serif;
+        }
+
+        .menu-color {
+            background-color: #e4d1b1;
+        }
+
+        .bg-primary-theme {
+            font-family: 'Cedarville Cursive', cursive;
+            font-weight: 300;
+            font-size: 5rem;
+            background-color: #e4d1b1;
+            color: #a65c51;
+        }
+
+        label {
+            color: #663f38
+        }
+
+        .rounded-pill-left {
+            border-top-left-radius: 50rem;
+            border-bottom-left-radius: 50rem;
+        }
+
+        .rounded-pill-right {
+            border-top-right-radius: 50rem;
+            border-bottom-right-radius: 50rem;
+        }
+    </style>
+</head>
+
+<body class="container-fluid m-0 p-0">
+    <section id="home-sec" style="display: none;" class="pb-5">
+        <div class="container-fluid p-0">
+            <nav class="navbar bg-primary-theme shadow shadow-sm">
+                <div class="container-fluid">
+                    <span class="navbar-brand mb-0" style="color: #733f38; font-size: 1.8rem;"><i class="bi bi-arrow-left-circle-fill" id="back-btn" style="color: #733f38; font-size: 1.8rem; display:none"></i> lip
+                        lover</span>
+                    <img class="img-fluid rounded-circle" style="width: 50px; height: 50px" id="line-profile">
+                </div>
+            </nav>
+        </div>
+        <section style="display: none;" id="menu-sec">
+            <div class="container-fluid">
+                <div class="row mt-4 g-4 justify-content-center">
+                    <div class="col-12 text-center">
+                        <div class="display-2" style="color: #c88c84; font-family: 'Abril Fatface', cursive;">MENU</div>
+                    </div>
+                    <div class="col-8 col-md-3 btn p-2 mx-md-2 rounded-pill text-center menu-btn" style="background-color: #ffedc8;" id="menu-reserve-btn">
+                        <i class="bi bi-cart-fill display-3 fw-bold" style="color: #733f38;"></i><br>
+                        สั่งจอง
+                    </div>
+                    <div class="col-8 col-md-3 btn p-2 mx-md-2 rounded-pill text-center menu-btn" style="background-color: #ffedc8;" id="menu-pickup-btn">
+                        <i class="bi bi-truck display-3 fw-bold" style="color: #733f38;"></i><br>
+                        เบิกสินค้า
+                    </div>
+                    <div class="col-8 col-md-3 btn p-2 mx-md-2 rounded-pill text-center menu-btn" style="background-color: #ffedc8;" id="menu-check-btn">
+                        <i class="bi bi-cart-dash display-3 fw-bold" style="color: #733f38;"></i><br>
+                        ตรวจสอบสถานะ
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="reserve-sec" style="display: none;">
+            <div id="reserve-form" class="container-fluid my-3">
+                <div class="row justify-centent-start g-3">
+                    <div class="col-12 text-center">
+                        <div class="display-2" style="color: #c88c84; font-family: 'Abril Fatface', cursive;">ORDER</div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <label for="reserve-date">วันที่จอง</label>
+                        <input type="date" name="reserve-date" id="reserve-date" class="form-control text-center rounded-pill shadow-sm">
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <label for="customer-name">ชื่อลูกค้า</label>
+                        <input type="text" name="customer-name" id="customer-name" class="form-control text-center rounded-pill  shadow-sm">
+                    </div>
+                </div>
+                <div class="row justify-centent-start g-3 mt-3">
+                    <div class="col-md-4 col-6">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text rounded-pill-left" id="basic-addon1" style="background-color: #cf5b4a;">01</span>
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="amount-01">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text rounded-pill-left" id="basic-addon1" style="background-color: #f4c3a3;">02</span>
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="amount-02">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text rounded-pill-left" id="basic-addon1" style="background-color: #f595a5;">03</span>
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="amount-03">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text rounded-pill-left" id="basic-addon1" style="background-color: #d88595;">04</span>
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="amount-04">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text rounded-pill-left" id="basic-addon1" style="background-color: #852c30;">05</span>
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="amount-05">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-6">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="amount-06">
+                                    <span class="input-group-text rounded-pill-right" id="basic-addon1" style="background-color: #97544e;">06</span>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="amount-07">
+                                    <span class="input-group-text rounded-pill-right" id="basic-addon1" style="background-color: #ee765b;">07</span>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="amount-08">
+                                    <span class="input-group-text rounded-pill-right" id="basic-addon1" style="background-color: #a03629;">08</span>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="amount-09">
+                                    <span class="input-group-text rounded-pill-right" id="basic-addon1" style="background-color: #e1272a;">09</span>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="amount-10">
+                                    <span class="input-group-text rounded-pill-right" id="basic-addon1" style="background-color: #f23d90;">10</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12 text-center">
+                        <button class="btn shadow-sm" style="background-color: #c88c84; color: white" id="order-btn">Order Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="pickup-sec" style="display: none">
+            <div id="pickup-form" class="container-fluid my-3">
+                <div class="row justify-centent-start g-3">
+                    <div class="col-12 text-center">
+                        <div class="display-2" style="color: #c88c84; font-family: 'Abril Fatface', 'Mitr';">เบิกสินค้า</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control text-center search" placeholder="กรอกเลข Order เพื่อค้นหา" id="pickup-order-search">
+                            <button class="btn search-btn" type="button" style="background-color: #a65c51; color:#fff" id="pick-up-search-btn"><i class="bi bi-search"></i>&nbsp;ค้นหา</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-centent-start g-3 hide-on-open" id="pickup-input" style="display:none">
+                    <p class="my-2 mt-4 py-0">วันที่จอง: <span id="pickup-p-reserve-date" class="fw-bold">xxxxx</span></p>
+                    <p class="my-2 py-0">ชื่อลูกค้า: <span id="pickup-p-customer-name" class="fw-bold">xxxxx</span></p>
+                    <div class="col-md-4 text-center">
+                        <label for="pickup-date">วันที่เบิก</label>
+                        <input type="date" name="pickup-date" id="pickup-date" class="form-control text-center rounded-pill shadow-sm">
+                    </div>
+                    <div class="col-md-4 col-6">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text rounded-pill-left" id="basic-addon1" style="background-color: #cf5b4a;">01</span>
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="pickup-amount-01">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text rounded-pill-left" id="basic-addon1" style="background-color: #f4c3a3;">02</span>
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="pickup-amount-02">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text rounded-pill-left" id="basic-addon1" style="background-color: #f595a5;">03</span>
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="pickup-amount-03">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text rounded-pill-left" id="basic-addon1" style="background-color: #d88595;">04</span>
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="pickup-amount-04">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text rounded-pill-left" id="basic-addon1" style="background-color: #852c30;">05</span>
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="pickup-amount-05">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-6">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="pickup-amount-06">
+                                    <span class="input-group-text rounded-pill-right" id="basic-addon1" style="background-color: #97544e;">06</span>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="pickup-amount-07">
+                                    <span class="input-group-text rounded-pill-right" id="basic-addon1" style="background-color: #ee765b;">07</span>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="pickup-amount-08">
+                                    <span class="input-group-text rounded-pill-right" id="basic-addon1" style="background-color: #a03629;">08</span>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="pickup-amount-09">
+                                    <span class="input-group-text rounded-pill-right" id="basic-addon1" style="background-color: #e1272a;">09</span>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control text-center" placeholder="จำนวน" id="pickup-amount-10">
+                                    <span class="input-group-text rounded-pill-right" id="basic-addon1" style="background-color: #f23d90;">10</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12 text-center">
+                        <button class="btn shadow-sm" style="background-color: #c88c84; color: white" id="pickup-btn">เบิกสินค้า</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="check-sec" style="display: none;">
+            <div id="check-form" class="container-fluid my-3">
+                <div class="row justify-centent-start g-3">
+                    <div class="col-12 text-center">
+                        <div class="display-3" style="color: #c88c84; font-family: 'Abril Fatface', 'Mitr';">ตรวจสอบค้างส่ง</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control text-center search" placeholder="กรอกเลข Order เพื่อค้นหา" id="check-order-search">
+                            <button class="btn search-btn" type="button" style="background-color: #e4baa1; color:#733f38" id="check-search-btn"><i class="bi bi-search"></i>&nbsp;ค้นหา</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-centent-start g-3 mb-4 hide-on-open" id="check-input" style="display: none;">
+                    <p class="my-2 mt-4 py-0">วันที่จอง: <span id="check-p-reserve-date" class="fw-bold">xxxxx</span></p>
+                    <p class="my-2 py-0">วันเบิกล่าสุด: <span id="check-p-pickup-date" class="fw-bold">xxxxx</span></p>
+                    <p class="my-2 py-0">ชื่อลูกค้า: <span id="check-p-customer-name" class="fw-bold">xxxxx</span></p>
+                    <div class="col-md-4 shadow" id="check-template" style="display: none;">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body p-0">
+                                        <h5 class="card-title rounded-top p-2" id="check-lip-no">01</h5>
+                                        <div class="row p-1">
+                                            <div class="col-4">
+                                                <div class="card">
+                                                    <div class="card-body p-0">
+                                                        <h6 class="card-title rounded-top p-2 pb-0 mb-0">จอง</h6>
+                                                        <p class="card-text text-center h4 pt-0 mt-0" id="check-order-amount">xxxxx</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="card">
+                                                    <div class="card-body p-0">
+                                                        <h6 class="card-title rounded-top p-2 pb-0 mb-0">เบิก</h6>
+                                                        <p class="card-text text-center h2 pt-0 mt-0" id="check-pickup-amount">xxxxx</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="card">
+                                                    <div class="card-body p-0">
+                                                        <h6 class="card-title rounded-top p-2 pb-0 mb-0">ค้างส่ง
+                                                        </h6>
+                                                        <p class="card-text text-center h2 pt-0 mt-0" id="check-balance-amount">xxxxx</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <div id="splash-screen" class="d-flex h-100 align-items-center justify-content-center">
+        <div class="row justify-content-center">
+            <div class="col-8 col-md-4">
+                <img src="https://sgp1.vultrobjects.com/img-in-th/UFPkHB.jpeg" class="img-fluid">
+            </div>
+            <div class="col-12 text-center">
+                <div class="spinner-grow text-primary m-5" style="width: 3rem; height: 3rem; background-color: #e4d1b1; border-color: #978a75;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var Toast
+        var script_url = 'https://script.google.com/macros/s/AKfycbx4X2ZSuHjSBHsmKoR4LFGrMKfDCpZb3bE7PgatsTjG0UucNFIal0RnyWvz23gKqSJk/exec'
+        var click = 0
+        var click_time
+        var profile
+        function adminClick() {
+            if (!click_time) click_time = new Date().getTime()
+            if (new Date().getTime() - click_time > 5000) {
+                click = 0
+                click_time = new Date().getTime()
+            }
+            click++
+            console.log("🚀 ~ click:", click)
+            if (click == 9) {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Password',
+                    input: 'password',
+                    inputAttributes: {
+                        autocapitalize: 'off'
+                    },
+                    showCancelButton: false,
+                    confirmButtonText: 'ยืนยัน',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (password) => {
+                        return $.ajax({
+                            url: script_url,
+                            method: 'POST',
+                            dataType: 'json',
+                            data: {
+                                opt: 'register',
+                                password: password,
+                                uid: profile.userId,
+                                name: profile.displayName,
+                            },
+                            success: (res) => {
+                                if (res.status == 'success') {
+                                    localStorage.setItem('login_status', profile.userId)
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'ยืนยันสำเร็จ',
+                                        text: 'คุณได้รับสิทธิ์เข้าใช้งานแล้ว',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    }).then(() => {
+                                        $('#splash-screen').fadeOut(150, function () {
+                                            $(this).remove();
+                                            // $('body').addClass('menu-color')
+                                            $('#menu-sec').show()
+                                            $('#home-sec').fadeIn(150)
+                                        });
+                                    })
+                                } else {
+                                    Swal.showValidationMessage(
+                                        `รหัสผ่านไม่ถูกต้อง`
+                                    )
+                                }
+                            },
+                            error: (err) => {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'เกิดข้อผิดพลาด',
+                                    text: 'กรุณาลองใหม่อีกครั้ง',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then(() => {
+                                    location.reload()
+                                })
+                            }
+                        })
+                    },
+                })
+            }
+        }
+        $(document).ready(function () {
+            $('.search').mask('LIP-000000');
+            liff.init({
+                liffId: '1660662622-aOv55nKE',
+                withLoginOnExternalBrowser: true
+            })
+            $('#pickup-input input').attr('disabled', true)
+            Toast = Swal.mixin({
+                toast: true,
+                position: 'top',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+            liff.ready.then(async () => {
+                profile = await liff.getProfile()
+                $('#line-profile').attr('src', profile.pictureUrl)
+                let login_status = localStorage.getItem('login_status')
+                console.log("🚀 ~ login_status:", login_status)
+                if (login_status == profile.userId) {
+                    $('#splash-screen').fadeOut(150, function () {
+                        $(this).remove();
+                        // $('body').addClass('menu-color')
+                        $('#menu-sec').show()
+                        $('#home-sec').fadeIn(150)
+                    });
+                } else {
+                    $.ajax({
+                        url: script_url,
+                        method: 'POST',
+                        dataType: 'json',
+                        data: {
+                            opt: 'check_user',
+                            uid: profile.userId
+                        },
+                        success: function (res) {
+                            if (res.status == 'unregisted') {
+                                Swal.fire({
+                                    icon: 'error',
+                                    html: '<h2 onclick="adminClick()">กรุณาติดต่อผู้ดูแลระบบเพื่อขอสิทธิ์ใช้งาน</h2>',
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                })
+                            } else {
+                                localStorage.setItem('login_status', profile.userId)
+                                $('#splash-screen').fadeOut(150, function () {
+                                    $(this).remove();
+                                    // $('body').addClass('menu-color')
+                                    $('#menu-sec').show()
+                                    $('#home-sec').fadeIn(150)
+                                });
+                            }
+                        },
+                        error: function (err) {
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'เกิดข้อผิดพลาด'
+                            })
+                        }
+                    })
+                }
+            })
+            $('#reserve-date, #pickup-date').val(new Date().toISOString().split('T')[0])
+            $('input[type="number"]').attr('min', 1).attr('inputmode', 'numeric')
+            $('.menu-btn').click(function () {
+                let id = $(this).attr('id').replace('-btn', '').replace('menu-', '')
+                $('.hide-on-open').hide()
+                $('#menu-sec').fadeOut(150, function () {
+                    $(this).hide();
+                    $('#' + id + '-sec').find('input').val('')
+                    $('#' + id + '-sec').fadeIn(150, function () {
+                        $('#back-btn').fadeIn(150)
+                        $('#reserve-date, #pickup-date').val(new Date().toISOString().split('T')[0])
+                    })
+                })
+            })
+            $('#back-btn').click(function () {
+                $('#back-btn').fadeOut(150, function () {
+                    $('#pickup-input input').removeAttr('disabled').val('')
+                    $('#home-sec').find('section').fadeOut(150, function () {
+                        $('#home-sec').find('section').hide()
+                        $('#menu-sec').fadeIn(150)
+                    })
+                })
+            })
+        })
+        $('.search').on('keyup', function () {
+            event.preventDefault()
+            // if enter key is pressed
+            let id = $(this).attr('id')
+            if (event.keyCode == 13) {
+                $('#' + id).parent().find('.search-btn').click()
+            }
+        })
+        $('#pick-up-search-btn').click(function () {
+            if (event) event.preventDefault()
+            let orderid = $('#pickup-order-search').val()
+            if (orderid == '') {
+                return Toast.fire({
+                    icon: 'error',
+                    title: 'กรุณากรอกเลขที่ใบสั่งซื้อ'
+                })
+            }
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: script_url,
+                method: "POST",
+                dataType: "json",
+                data: {
+                    opt: 'get_order',
+                    orderid: orderid.toUpperCase()
+                },
+                success: function (res) {
+                    $.LoadingOverlay("hide");
+                    console.log(res)
+                    if (res.status == 'success') {
+                        $('#pickup-input input').removeAttr('disabled')
+                        $('#pickup-p-reserve-date').text(res.order.date.split('T')[0])
+                        $('#pickup-p-customer-name').text(res.order.name)
+                        $('#pickup-input').fadeIn(300)
+                    }
+                    else if (res.status == 'not found') {
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'ไม่พบข้อมูลใบสั่งซื้อ'
+                        })
+                    }
+                    else {
+                        Toast.fire({
+                            icon: 'error',
+                            title: res.message
+                        })
+                    }
+                }
+            })
+        })
+        $('#check-search-btn').click(function () {
+            if (event) event.preventDefault()
+            let orderno = $('#check-order-search').val()
+            if (orderno == '') {
+                return Toast.fire({
+                    icon: 'error',
+                    title: 'กรุณากรอกเลขที่ใบสั่งซื้อ'
+                })
+            }
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: script_url,
+                method: "POST",
+                dataType: "json",
+                data: {
+                    opt: 'get_summary',
+                    orderno: orderno.toUpperCase()
+                },
+                success: function (res) {
+                    $.LoadingOverlay("hide");
+                    console.log(res)
+                    if (res.status == 'success') {
+                        let data = res.data
+                        $('#check-p-reserve-date').text(res.date)
+                        $('#check-p-pickup-date').text(res.pickup_date)
+                        $('#check-p-customer-name').text(res.name)
+                        Object.keys(data).sort().forEach(function (key) {
+                            let check_card = $('#check-template').clone().show()
+                            let bg = $('#pickup-amount-' + key).parent().find('span').css('background-color')
+                            console.log("🚀 ~ bg:", bg)
+                            $(check_card).attr('id', 'check-' + key + 'res')
+                            $(check_card).find('#check-lip-no').text('No. ' + key).attr('id', 'lip-' + key).attr('style', 'background-color: ' + bg + ';')
+                            $(check_card).find('#check-order-amount').text(data[key].order).attr('id', 'order-' + key)
+                            $(check_card).find('#check-pickup-amount').text(data[key].pickup).attr('id', 'pickup-' + key)
+                            $(check_card).find('#check-balance-amount').text(data[key].balance).attr('id', 'balance-' + key)
+                            $('#check-template').parent().append(check_card)
+                        });
+                        $('#check-input').fadeIn(300)
+                    }
+                    else if (res.status == 'not found') {
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'ไม่พบข้อมูลใบสั่งซื้อ'
+                        })
+                    }
+                    else {
+                        Toast.fire({
+                            icon: 'error',
+                            title: res.message
+                        })
+                    }
+                }
+            })
+        })
+        $('#order-btn').click(function () {
+            event.preventDefault()
+            let date = $('#reserve-date').val()
+            let name = $('#customer-name').val()
+            if (date == '') {
+                return Toast.fire({
+                    icon: 'error',
+                    title: 'กรุณาเลือกวันที่จอง'
+                })
+            }
+            if (name == '') {
+                return Toast.fire({
+                    icon: 'error',
+                    title: 'กรุณากรอกชื่อลูกค้า'
+                })
+            }
+            let lip_obj = {}
+            let total = 0
+            for (let i = 1; i <= 10; i++) {
+                let key = 'amount-' + ("00" + (i)).slice(-2)
+                let amount = $('#' + key).val() == '' ? 0 : $('#' + key).val()
+                lip_obj[key] = amount
+                total += parseInt(amount)
+            }
+            if (total == 0) {
+                return Toast.fire({
+                    icon: 'error',
+                    title: 'กรุณากรอกจำนวนสินค้าที่ต้องการสั่ง'
+                })
+            }
+            console.log("🚀 ~ lip_obj:", lip_obj)
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: script_url,
+                type: 'POST',
+                data: {
+                    opt: 'order',
+                    date: date,
+                    name: name,
+                    lip_obj: JSON.stringify(lip_obj)
+                },
+                success: function (res) {
+                    $.LoadingOverlay("hide");
+                    if (res.status == 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'จองสินค้าสำเร็จ',
+                            html: '<h4>Order No.: ' + res.orderid + '</h4><br>กรุณาเช็คสถานะสินค้าที่เมนู "ตรวจสอบสถานะ"',
+                            confirmButtonText: 'ปิด',
+                            showDenyButton: true,
+                            denyButtonText: 'ไปหน้าตรวจสอบสถานะ',
+                            allowOutsideClick: false
+                        }).then((result) => {
+                            if (result.isDenied) {
+                                $(this).hide();
+                                $('#reserve-sec').fadeOut(150, function () {
+                                    $('#check-sec').find('input').val('')
+                                    $('#check-sec').fadeIn(150, function () {
+                                        $('#check-order-search').val(res.orderid)
+                                        $('#check-search-btn').click()
+                                        $('#reserve-date, #pickup-date').val(new Date().toISOString().split('T')[0])
+                                    })
+                                })
+                            }
+                        })
+                        $('#reserve-form').trigger('reset')
+                        $('#reserve-date, #pickup-date').val(new Date().toISOString().split('T')[0])
+                    } else {
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'เกิดข้อผิดพลาด'
+                        })
+                    }
+                }
+            })
+        })
+        $('#pickup-btn').click(function () {
+            event.preventDefault()
+            let orderno = $('#pickup-order-search').val()
+            let pickup_date = $('#pickup-date').val()
+            let lip_obj = {}
+            let total = 0
+            for (let i = 1; i <= 10; i++) {
+                let key = 'pickup-amount-' + ("00" + (i)).slice(-2)
+                let amount = $('#' + key).val() == '' ? 0 : $('#' + key).val()
+                lip_obj[key] = amount
+                total += parseInt(amount)
+            }
+            if (total == 0) {
+                return Toast.fire({
+                    icon: 'error',
+                    title: 'กรุณากรอกจำนวนสินค้าที่ต้องการสั่ง'
+                })
+            }
+            console.log("🚀 ~ lip_obj:", lip_obj)
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: script_url,
+                type: 'POST',
+                data: {
+                    opt: 'pickup',
+                    orderno: orderno,
+                    pickup_date: pickup_date,
+                    lip_obj: JSON.stringify(lip_obj)
+                },
+                success: function (res) {
+                    $.LoadingOverlay("hide");
+                    if (res.status == 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'เบิกสินค้าสำเร็จ',
+                            text: 'กรุณาเช็คสถานะสินค้าที่เมนู "ตรวจสอบสถานะ"',
+                            showDenyButton: true,
+                            denyButtonText: 'ไปหน้าตรวจสอบสถานะ',
+                            confirmButtonText: 'ปิด',
+                            allowOutsideClick: false
+                        }).then((result) => {
+                            if (result.isDenied) {
+                                $(this).hide();
+                                $('#pickup-sec').fadeOut(150, function () {
+                                    $('#check-sec').find('input').val('')
+                                    $('#check-sec').fadeIn(150, function () {
+                                        $('#check-order-search').val(orderno)
+                                        $('#check-search-btn').click()
+                                        $('#reserve-date, #pickup-date').val(new Date().toISOString().split('T')[0])
+                                    })
+                                })
+                            }
+                        })
+                        $('#pickup-form').trigger('reset')
+                        $('#reserve-date, #pickup-date').val(new Date().toISOString().split('T')[0])
+                        $('#pickup-order-search').val(orderno)
+                    } else {
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'เกิดข้อผิดพลาด'
+                        })
+                    }
+                }
+            })
+        })
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-mask-plugin@1.14.16/dist/jquery.mask.min.js"></script>
+</body>
+
+</html>
