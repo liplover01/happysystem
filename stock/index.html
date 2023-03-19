@@ -548,10 +548,10 @@
                         $('#check-p-reserve-date').text(res.date)
                         $('#check-p-pickup-date').text(res.pickup_date)
                         $('#check-p-customer-name').text(res.name)
-                        //$(".check-div").remove()
+                        $(".check-div").remove()
                         Object.keys(data).sort().forEach(function (key) {
                             let check_card = $('#check-template').clone().show()
-                            check_card.addclass("check-div")
+                            check_card.addClass("check-div")
                             let bg = $('#pickup-amount-' + key).parent().find('span').css('background-color')
                             console.log("🚀 ~ bg:", bg)
                             $(check_card).attr('id', 'check-' + key + 'res')
