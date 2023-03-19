@@ -550,7 +550,8 @@
                         $('#check-p-customer-name').text(res.name)
                         $(".check-div").remove()
                         Object.keys(data).sort().forEach(function (key) {
-                            let check_card = $('#check-template').clone().addclass("check-div").show()
+                            let check_card = $('#check-template').clone().show()
+                            check_card.addclass("check-div")
                             let bg = $('#pickup-amount-' + key).parent().find('span').css('background-color')
                             console.log("🚀 ~ bg:", bg)
                             $(check_card).attr('id', 'check-' + key + 'res')
