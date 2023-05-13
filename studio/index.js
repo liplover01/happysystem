@@ -1,5 +1,5 @@
 var Toast
-var script_url = 'https://script.google.com/macros/s/AKfycbw8_xSBMsD_auWTLk6e2KmrjWw4POYdBljhmZESCBWpzUlEr6hy6FfJjww-xVbyyYNV4Q/exec
+var script_url = 'https://script.google.com/macros/s/AKfycbw8_xSBMsD_auWTLk6e2KmrjWw4POYdBljhmZESCBWpzUlEr6hy6FfJjww-xVbyyYNV4Q/exec'
 var click = 0
 var click_time
 var profile
