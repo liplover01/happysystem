@@ -77,7 +77,7 @@ $(document).ready(function () {
     $('.search').mask('LIP-000000');
 
     liff.init({
-        liffId: '1655873446-MpmBPPzl',
+        liffId: '1660662622-RYp33E0P',
         withLoginOnExternalBrowser: true
     })
    
