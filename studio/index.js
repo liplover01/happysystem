@@ -1,5 +1,5 @@
 var Toast
-var script_url = 'https://script.google.com/macros/s/AKfycbzc7-WcUDfRGxuVHY58t-cT_Djh3zIrLnU5Yio5Klsrkp58ogACUf01QuKRBgFj9Wmi/exec'
+var script_url = 'https://script.google.com/macros/s/AKfycbw8_xSBMsD_auWTLk6e2KmrjWw4POYdBljhmZESCBWpzUlEr6hy6FfJjww-xVbyyYNV4Q/exec
 var click = 0
 var click_time
 var profile
@@ -76,20 +76,11 @@ function adminClick() {
 $(document).ready(function () {
     $('.search').mask('LIP-000000');
 
-    // liff.init({
-    //     liffId: '1655873446-MpmBPPzl',
-    //     withLoginOnExternalBrowser: true
-    // })
-    Swal.fire({
-        title: 'Expired Demo',
-        text: 'เนื่องจากเว็บไซต์นี้เป็นการสาธิตการใช้งานเท่านั้น จึงมีการกำหนดเวลาในการใช้งาน หากต้องการใช้งานต่อ กรุณาติดต่อผู้พัฒนา',
-        icon: 'warning',
-        showCancelButton: false,
-        showConfirmButton: false,
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        allowEnterKey: false
+    liff.init({
+        liffId: '1655873446-MpmBPPzl',
+        withLoginOnExternalBrowser: true
     })
+   
 
 
     $.ajax({
