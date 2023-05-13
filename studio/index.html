@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Lovers</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Cedarville+Cursive&family=Abril+Fatface&family=Mitr&display=swap" rel="stylesheet">
+    <script src="//cdn.quilljs.com/1.3.7/quill.js"></script>
+    <script src="//cdn.quilljs.com/1.3.7/quill.min.js"></script>
+
+    <!-- Theme included stylesheets -->
+    <link href="//cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet" />
+    <link href="//cdn.quilljs.com/1.3.7/quill.bubble.css" rel="stylesheet" />
+    <script>
+        document.write('<script src="./index.js?' + new Date().getTime() + '"></' + 'script>');
+        document.write('<script src="./video/video.js?' + new Date().getTime() + '"></' + 'script>');
+        document.write('<script src="./photo/photo.js?' + new Date().getTime() + '"></' + 'script>');
+        document.write('<script src="./onair/onair.js?' + new Date().getTime() + '"></' + 'script>');
+
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            font-family: 'Mitr', sans-serif;
+        }
+
+        .menu-color {
+            background-color: #e4d1b1;
+        }
+
+        .bg-primary-theme {
+            font-family: 'Cedarville Cursive', cursive;
+            font-weight: 300;
+            font-size: 5rem;
+            background-color: #292929;
+            /* color: #a65c51; */
+        }
+
+        label {
+            color: #663f38
+        }
+
+        .rounded-pill-left {
+            border-top-left-radius: 50rem;
+            border-bottom-left-radius: 50rem;
+        }
+
+        .rounded-pill-right {
+            border-top-right-radius: 50rem;
+            border-bottom-right-radius: 50rem;
+        }
+
+        .menu-btn {
+            border-color: #000;
+            border-width: 4px;
+            /* border: #000; */
+        }
+
+        #calendar-table th,
+        #calendar-table td {
+            /* border: 1px solid #000; */
+            padding: 0.5rem;
+        }
+
+        #portfolio-add-update-form label {
+            color: #000;
+        }
+
+        .placeholder {
+            display: inline-block;
+            min-height: 1em;
+            vertical-align: middle;
+            /* cursor: wait; */
+            background-color: currentcolor;
+            opacity: .5;
+        }
+
+        .content-editor p {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body class="container-fluid m-0 p-0">
+    <section id="home-sec" class="pb-5" style="display: none;">
+        <div class="container-fluid p-0">
+            <nav class="navbar bg-primary-theme shadow shadow-sm">
+                <div class="container-fluid">
+                    <span class="navbar-brand mb-0" style="color: #ffedc8; font-size: 1.8rem;"><i class="bi bi-arrow-left-circle-fill" id="back-btn" style="color: #ffedc8; font-size: 1.8rem; display:none"></i> Studio Lovers</span>
+                    <div class="d-flex flex-column">
+                        <img class="img-fluid rounded-circle" style="width: 50px; height: 50px; background-color: #21252b; border-color: #21252b;" id="line-profile">
+                        <div class="text-light text-center" style="font-family: 'Mitr', sans-serif; font-size: 0.7rem; display: none;" id="admin-status">ADMIN</div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <section id="menu-sec" class="container-fluid">
+            <div class="container-fluid">
+                <div class="row mt-4 px-3 g-3 justify-content-center">
+                    <div class="col-12 text-center">
+                        <img src="./menu header.png" alt="" style="width: 80%; max-width: 200px" onClick="adminClick()">
+                    </div>
+                    <div class="col-md-8 col-md-6 mx-2 btn menu-btn d-flex" style="border-radius: 0%; padding: 3px; --bs-btn-hover-border-color: #ae6061" id="menu-vdo-btn">
+                        <div style="width:60%; height:100%" class="d-flex align-items-center justify-content-center text-bg-dark fs-4">SCHEDULE</div>
+                        <div style="width:40%; min-height: 70px;" class="fs-1 fw-bold d-flex align-items-center justify-content-center">VDO</div>
+                    </div>
+                    <div class="col-md-8 col-md-6 mx-2 btn menu-btn d-flex" style="border-radius: 0%; padding: 3px; --bs-btn-hover-border-color: #ae6061" id="menu-photo-btn">
+                        <div style="width:60%; height:100%" class="d-flex align-items-center justify-content-center text-bg-dark fs-4">SCHEDULE</div>
+                        <div style="width:40%; min-height: 70px;" class="fs-1 fw-bold d-flex align-items-center justify-content-center">PHOTO</div>
+                    </div>
+                    <div class="col-md-8 col-md-6 mx-2 btn menu-btn d-flex" style="border-radius: 0%; padding: 3px; --bs-btn-hover-border-color: #ae6061" id="menu-onair-btn">
+                        <div style="width:60%; height:100%" class="d-flex align-items-center justify-content-center text-bg-dark fs-4">SCHEDULE</div>
+                        <div style="width:40%; min-height: 70px;" class="fs-1 fw-bold d-flex align-items-center justify-content-center">ON AIR</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="schedule-vdo-sec" class="container-fluid" style="display: none;">
+            <div class="container-fluid my-3">
+                <div class="row justify-centent-start g-3">
+                    <div class="col-12 text-center">
+                        <div class="display-3" style="color: #c88c84; font-family: 'Abril Fatface', cursive;">SCHEDULE VIDEO</div>
+                    </div>
+                </div>
+                <div class="row g-3 justify-content-center">
+                    <div class="col-md-7">
+                        <label for="sel-year">เลือกปี</label>
+                        <select class="form-select" id="sel-year">
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                        </select>
+                    </div>
+                    <div class="col-md-7">
+                        <label for="sel-month">เลือกเดือน</label>
+                        <select class="form-select" id="sel-month">
+                            <option value="1">มกราคม</option>
+                            <option value="2">กุมภาพันธ์</option>
+                            <option value="3">มีนาคม</option>
+                            <option value="4">เมษายน</option>
+                            <option value="5">พฤษภาคม</option>
+                            <option value="6">มิถุนายน</option>
+                            <option value="7">กรกฎาคม</option>
+                            <option value="8">สิงหาคม</option>
+                            <option value="9">กันยายน</option>
+                            <option value="10">ตุลาคม</option>
+                            <option value="11">พฤศจิกายน</option>
+                            <option value="12">ธันวาคม</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row justify-content-center g-3">
+                    <div class="col-md-8">
+                        <div class="mt-4 shadow" id="calendar-sec"></div>
+                    </div>
+                    <div class="col-6 admin-only">
+                        <button class="btn btn-warning w-100" id="add-model-data-btn">เพิ่มข้อมูล Model</button>
+                    </div>
+                    <div class="col-6 admin-only">
+                        <button class="btn btn-success w-100" id="update-model-data-btn">แก้ไขข้อมูล Model</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="portfolio-sec" class="container-fluid" style="display: none;">
+            <div class="container-fluid my-3">
+                <div class="row justify-centent-start g-3">
+                    <div class="col-12 text-center">
+                        <div class="display-2" style="color: #c88c84; font-family: 'Abril Fatface', cursive;">PORTFOLIO</div>
+                    </div>
+                    <div class="col-12 text-center mb-2 ms-2" id="portfolio-date"></div>
+                </div>
+                <div class="row mt-1 justify-content-center">
+                    <div class="col-12 text-center">
+                        <div class="h1">ชื่อเล่น: <span id="portfolio-nickname"></span></div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="w-100 d-flex justify-content-center">
+                            <span class="placeholder" style="width: 200px; height: 200px;"></span>
+                            <img alt="portfolio-profile" id="portfolio-profile" class="img-fluid shadow has-preview" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="col-12 text-center mt-3">
+                        <div class="h3"><img class="not-hide" src="./tiktok.png" width="50px"/>&nbsp;&nbsp;<a id="portfolio-tiktok"></a></div>
+                    </div>
+                    <div class="col-12 text-center mt-3">
+                        <div class="h3"><img class="not-hide" src="./instagram.png" width="50px"/>&nbsp;&nbsp;<a id="portfolio-instagram"></a></div>
+                    </div>
+                    <div class="col-12 text-center mt-3">
+                        <div class="h3"><img class="not-hide" src="./facebook.png" width="50px"/>&nbsp;&nbsp;<a id="portfolio-facebook"></a></div>
+                    </div>
+                </div>
+                <div class="row justify-content-center p-2">
+                    <div class="col-12 text-center mt-3">
+                        <div class="h3">CHARACTER</div>
+                    </div>
+                    <div class="col-md-8 text-center mt-3 border border-dark border-2 rounded p-2">
+                        <div class="h5" id="portfolio-charactor-sexy">SEXY</div>
+                        <div class="row p-0 m-0 g-2 mt-2 align-items-start justify-content-start">
+                            <div class="col-6">
+                                <div class="w-100 d-flex justify-content-center">
+                                    <span class="placeholder" style="width: 100%; aspect-ratio:1;"></span>
+                                </div>
+                                <img class="img-fluid has-preview" id="portfolio-sexy-img-1" style="display: none;">
+                            </div>
+                            <div class="col-6">
+                                <div class="w-100 d-flex justify-content-center">
+                                    <span class="placeholder" style="width: 100%; aspect-ratio:1;"></span>
+                                </div>
+                                <img class="img-fluid has-preview" id="portfolio-sexy-img-2" style="display: none;">
+                            </div>
+                            <div class="col-6">
+                                <div class="w-100 d-flex justify-content-center">
+                                    <span class="placeholder" style="width: 100%; aspect-ratio:1;"></span>
+                                </div>
+                                <img class="img-fluid has-preview" id="portfolio-sexy-img-3" style="display: none;">
+                            </div>
+                            <div class="col-6">
+                                <div class="w-100 d-flex justify-content-center">
+                                    <span class="placeholder" style="width: 100%; aspect-ratio:1;"></span>
+                                </div>
+                                <img class="img-fluid has-preview" id="portfolio-sexy-img-4" style="display: none;">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-8 text-center mt-3 border border-dark border-2 rounded p-2">
+                        <div class="h5" id="portfolio-charactor-comedy">COMEDY</div>
+                        <div class="row p-0 m-0 mt-2 g-2 align-items-start justify-content-start">
+                            <div class="col-6">
+                                <div class="w-100 d-flex justify-content-center">
+                                    <span class="placeholder" style="width: 100%; aspect-ratio:1;"></span>
+                                </div>
+                                <img class="img-fluid has-preview" id="portfolio-comedy-img-1" style="display: none;">
+                            </div>
+                            <div class="col-6">
+                                <div class="w-100 d-flex justify-content-center">
+                                    <span class="placeholder" style="width: 100%; aspect-ratio:1;"></span>
+                                </div>
+                                <img class="img-fluid has-preview" id="portfolio-comedy-img-2" style="display: none;">
+                            </div>
+                            <div class="col-6">
+                                <div class="w-100 d-flex justify-content-center">
+                                    <span class="placeholder" style="width: 100%; aspect-ratio:1;"></span>
+                                </div>
+                                <img class="img-fluid has-preview" id="portfolio-comedy-img-3" style="display: none;">
+                            </div>
+                            <div class="col-6">
+                                <div class="w-100 d-flex justify-content-center">
+                                    <span class="placeholder" style="width: 100%; aspect-ratio:1;"></span>
+                                </div>
+                                <img class="img-fluid has-preview" id="portfolio-comedy-img-4" style="display: none;">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-8 text-center mt-3 border border-dark border-2 rounded p-2">
+                        <div class="h5" id="portfolio-charactor-sweet">SWEET</div>
+                        <div class="row p-0 m-0 mt-2 g-2 align-items-start justify-content-start">
+                            <div class="col-6">
+                                <div class="w-100 d-flex justify-content-center">
+                                    <span class="placeholder" style="width: 100%; aspect-ratio:1;"></span>
+                                </div>
+                                <img class="img-fluid has-preview" id="portfolio-sweet-img-1" style="display: none;">
+                            </div>
+                            <div class="col-6">
+                                <div class="w-100 d-flex justify-content-center">
+                                    <span class="placeholder" style="width: 100%; aspect-ratio:1;"></span>
+                                </div>
+                                <img class="img-fluid has-preview" id="portfolio-sweet-img-2" style="display: none;">
+                            </div>
+                            <div class="col-6">
+                                <div class="w-100 d-flex justify-content-center">
+                                    <span class="placeholder" style="width: 100%; aspect-ratio:1;"></span>
+                                </div>
+                                <img class="img-fluid has-preview" id="portfolio-sweet-img-3" style="display: none;">
+                            </div>
+                            <div class="col-6">
+                                <div class="w-100 d-flex justify-content-center">
+                                    <span class="placeholder" style="width: 100%; aspect-ratio:1;"></span>
+                                </div>
+                                <img class="img-fluid has-preview" id="portfolio-sweet-img-4" style="display: none;">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-8 text-center mt-3 border border-dark border-2 rounded p-2">
+                        <div class="h5" id="portfolio-charactor-voice">VOICE</div>
+                        <div class="row p-0 m-0 mt-2 g-2 align-items-start justify-content-start" id="portfolio-charactor-voice-div">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3 justify-content-center admin-only">
+                    <div class="col-9">
+                        <button class="btn btn-dark w-100" id="portfolio-add-update-btn">แก้ไข</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-danger w-100" id="portfolio-del-btn">ลบ</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="video-content-sec" class="container-fluid" style="display: none;">
+            <div class="row justify-content-between align-items-center mt-3">
+                <div class="col text-start mb-2 ms-2" id="video-content-date"></div>
+                <div class=" col text-end mb-2 me-2 admin-only">
+                    <button class="btn btn-warning rounded-pill" id="video-content-add-btn">เพิ่ม Content</button>
+                </div>
+            </div>
+            <div class="container-fluid my-3 content-div content-template" style="display: none;">
+
+                <div class="row justify-centent-start g-3">
+                    <div class="col-12 text-center">
+                        <div class="display-5" style="color: #c88c84; font-family: 'Abril Fatface', cursive;">Content</div>
+                    </div>
+                    <div class="col-12 text-start">
+                        <!-- Create the editor container -->
+                        <div class="content-editor rounded border border-dark border-2 p-3 lh-sm text-break" style="min-height: 100px">
+                        </div>
+                        <div class="d-flex justify-content-end g-2 w-100 admin-only">
+                            <button class="btn btn-success w-25 mt-1" name="editor_edit">แก้ไข</button>
+                            <button class="btn btn-danger mt-1 ms-2" name="editor_delete">ลบ</button>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- <div class="row mt-2">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-primary">บันทึก</button>
+                    </div>
+                </div> -->
+            </div>
+        </section>
+        <section id="video-note-sec" class="container-fluid" style="display: none;">
+            <div class="row justify-content-between align-items-center mt-3">
+                <div class="col text-start mb-2 ms-2" id="video-note-date"></div>
+                <div class="col text-end mb-2 me-2 admin-only">
+                    <button class="btn btn-warning rounded-pill" id="video-note-add-btn">เพิ่ม Todo List</button>
+                </div>
+            </div>
+            <div class="container-fluid my-3 note-div note-template" style="display: none;">
+
+                <div class="row justify-centent-start g-3">
+                    <div class="col-12 text-center">
+                        <div class="display-5" style="color: #c88c84; font-family: 'Abril Fatface', cursive;">Todo List</div>
+                    </div>
+                    <div class="col-12 text-start">
+                        <!-- Create the editor container -->
+                        <div class="note-editor rounded border border-dark border-2 p-3 lh-sm text-break" style="min-height: 100px">
+                        </div>
+                        <div class="d-flex justify-content-end g-2 w-100 admin-only">
+                            <button class="btn btn-success w-25 mt-1" name="note_edit">แก้ไข</button>
+                            <button class="btn btn-danger mt-1 ms-2" name="note_delete">ลบ</button>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- <div class="row mt-2">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-primary">บันทึก</button>
+                    </div>
+                </div> -->
+            </div>
+        </section>
+        <section id="schedule-photo-sec" class="container-fluid" style="display: none;">
+            <div class="container-fluid my-3">
+                <div class="row justify-centent-start g-3">
+                    <div class="col-12 text-center">
+                        <div class="display-3" style="color: #c88c84; font-family: 'Abril Fatface', cursive;">SCHEDULE PHOTO</div>
+                    </div>
+                </div>
+                <div class="row g-3 justify-content-center">
+                    <div class="col-md-7">
+                        <label for="photo-sel-year">เลือกปี</label>
+                        <select class="form-select" id="photo-sel-year">
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                        </select>
+                    </div>
+                    <div class="col-md-7">
+                        <label for="photo-sel-month">เลือกเดือน</label>
+                        <select class="form-select" id="photo-sel-month">
+                            <option value="1">มกราคม</option>
+                            <option value="2">กุมภาพันธ์</option>
+                            <option value="3">มีนาคม</option>
+                            <option value="4">เมษายน</option>
+                            <option value="5">พฤษภาคม</option>
+                            <option value="6">มิถุนายน</option>
+                            <option value="7">กรกฎาคม</option>
+                            <option value="8">สิงหาคม</option>
+                            <option value="9">กันยายน</option>
+                            <option value="10">ตุลาคม</option>
+                            <option value="11">พฤศจิกายน</option>
+                            <option value="12">ธันวาคม</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row justify-content-center g-3">
+                    <div class="col-md-8">
+                        <div class="mt-4 shadow" id="photo-calendar-sec"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="photo-reference-sec" class="container-fluid" style="display: none;">
+            <div class="row justify-content-between align-items-center mt-3">
+                <div class="col text-start mb-2 ms-2" id="photo-reference-date"></div>
+                <div class="col text-end mb-2 me-2 admin-only">
+                    <button class="btn btn-warning rounded-pill" id="photo-reference-add-btn">เพิ่ม Reference</button>
+                </div>
+            </div>
+            <div class="container-fluid my-3">
+                <div class="row m-0 p-0 g-3">
+                    <div class="col-6 text-center justify-content-between g-3 reference-div reference-template" style="display: none;">
+                        <div class="h5" style="color: #c88c84; font-family: 'Abril Fatface', cursive;">Ref</div>
+                        <!-- Create the editor container -->
+                        <img class="img-fluid photo-reference" style="max-height: 300px">
+                        <div class="d-flex justify-content-end g-2 w-100 admin-only">
+                            <button class="btn btn-success mt-1" name="ref_edit">แก้ไข</button>
+                            <button class="btn btn-danger mt-1 ms-2" name="ref_delete">ลบ</button>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- <div class="row mt-2">
+                            <div class="col-12 text-center">
+                                <button class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </div> -->
+            </div>
+        </section>
+        <section id="photo-file-photo-sec" class="container-fluid" style="display: none;">
+            <div class="row justify-content-between align-items-center mt-3">
+                <div class="col text-start mb-2 ms-2" id="photo-file-photo-date"></div>
+                <div class="col text-end mb-2 me-2 admin-only">
+                    <button class="btn btn-warning rounded-pill" id="photo-file-photo-add-btn">เพิ่ม File</button>
+                </div>
+            </div>
+            <div class="container-fluid my-3">
+                <div class="row m-0 p-0 g-3">
+                    <div class="col-6 text-center justify-content-between g-3 file-photo-div file-photo-template" style="display: none;">
+                        <div class="h5" style="color: #c88c84; font-family: 'Abril Fatface', cursive;">File</div>
+                        <!-- Create the editor container -->
+                        <img class="img-fluid photo-file-photo" style="max-height: 300px">
+                        <div class="d-flex justify-content-end g-2 w-100 admin-only">
+                            <button class="btn btn-success mt-1" name="file_edit">แก้ไข</button>
+                            <button class="btn btn-danger mt-1 ms-2" name="file_delete">ลบ</button>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- <div class="row mt-2">
+                            <div class="col-12 text-center">
+                                <button class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </div> -->
+            </div>
+        </section>
+        <section id="schedule-onair-sec" class="container-fluid" style="display: none;">
+            <div class="container-fluid my-3">
+                <div class="row justify-centent-start g-3">
+                    <div class="col-12 text-center">
+                        <div class="display-3" style="color: #c88c84; font-family: 'Abril Fatface', cursive;">SCHEDULE ON AIR</div>
+                    </div>
+                </div>
+                <div class="row g-3 justify-content-center">
+                    <div class="col-md-7">
+                        <label for="onair-sel-year">เลือกปี</label>
+                        <select class="form-select" id="onair-sel-year">
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                        </select>
+                    </div>
+                    <div class="col-md-7">
+                        <label for="onair-sel-month">เลือกเดือน</label>
+                        <select class="form-select" id="onair-sel-month">
+                            <option value="1">มกราคม</option>
+                            <option value="2">กุมภาพันธ์</option>
+                            <option value="3">มีนาคม</option>
+                            <option value="4">เมษายน</option>
+                            <option value="5">พฤษภาคม</option>
+                            <option value="6">มิถุนายน</option>
+                            <option value="7">กรกฎาคม</option>
+                            <option value="8">สิงหาคม</option>
+                            <option value="9">กันยายน</option>
+                            <option value="10">ตุลาคม</option>
+                            <option value="11">พฤศจิกายน</option>
+                            <option value="12">ธันวาคม</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row justify-content-center g-3">
+                    <div class="col-md-8">
+                        <div class="mt-4 shadow" id="onair-calendar-sec"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="onair-data-sec" class="container-fluid" style="display: none;">
+            <div class="container-fluid my-3">
+                <div class="row justify-centent-start g-3">
+                    <div class="col-12 text-center">
+                        <div class="display-6" style="color: #c88c84; font-family: 'Abril Fatface', cursive;">SCHEDULE ON AIR</div>
+                    </div>
+                </div>
+                <div class="row justify-content-between align-items-center mt-3">
+                    <div class="col text-start mb-2 ms-2" id="onair-date"></div>
+                    <div class="col text-end mb-2 me-2 admin-only">
+                        <button class="btn btn-warning rounded-pill" id="onair-add-btn">เพิ่มรายการ</button>
+                    </div>
+                </div>
+                <div class="row g-3 justify-content-center">
+                    <div class="col-12 table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-dark text-nowrap">
+                                <tr>
+                                    <th scope="col" class="text-center">ชื่อช่อง</th>
+                                    <th scope="col" class="text-center">ชื่อคลิป</th>
+                                    <th scope="col" class="text-center"><img src="./facebook.png" width="20px"/></th>
+                                    <th scope="col" class="text-center"><img src="./youtube.png" width="20px"/></th>
+                                    <th scope="col" class="text-center"><img src="./instagram.png" width="20px"/></th>
+                                    <th scope="col" class="text-center"><img src="./tiktok.png" width="20px"/></th>
+                                    <th scope="col" class="text-center admin-only"><i class="bi bi-pencil-square"></i></th>
+                                    <th scope="col" class="text-center admin-only"><i class="bi bi-trash"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody id="onair-tbody"></tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </section>
+    <div id="splash-screen" class="d-flex h-100 align-items-center justify-content-center container-fluid m-0 p-0">
+        <div class="row justify-content-center">
+            <div class="col-8 col-md-4">
+                <img src="./splash screen.png" class="img-fluid">
+            </div>
+            <div class="col-12 text-center">
+                <div class="spinner-grow text-primary m-5" style="width: 3rem; height: 3rem; background-color: #f38b8a; border-color: #f38b8a;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- !!fullscreen modal for show fullscreen image -->
+    <div class="modal fade" id="previewImageModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="previewImageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen">
+            <div class="modal-content">
+                <!-- <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="previewImageModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div> -->
+                <div class="modal-body bg-dark d-flex align-items-center justify-content-center">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- !!modal to add or update portfolio data -->
+    <div class="modal fade" id="portfolioAddUpdateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="portfolioAddUpdateModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #292929; color: #c88c84;">
+                    <h1 class="modal-title fs-5" id="portfolioAddUpdateModalLabel">Portfolio Model</h1>
+                    <div data-bs-theme="dark">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form id="portfolio-add-update-form">
+
+                        <div class="row justify-centent-start mt-3">
+                            <div class="col-12">
+                                <div class="w-100 d-flex flex-row justify-content-center">
+                                    <span class="placeholder" style="width: 200px; height: 200px;" onclick="document.getElementById('modal-profile-input').click()"></span>
+                                    <img class=" img-fluid preview" style="display: none; max-height: 200px;">
+                                </div>
+                                <label for="modal-profile-input">รูป Model</label>
+                                <input type="file" class="form-control" id="modal-profile-input" name="modal-profile-input" accept="image/*">
+                            </div>
+                        </div>
+                        <div class="row g-2 justify-centent-start mt-3">
+                            <div class="col-12">
+                                <label for="modal-model-name-input">ชื่อเล่นนางแบบ</label>
+                                <input type="text" class="form-control" id="modal-model-name-input" name="modal-model-name-input" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="modal-tiktok-input">Tiktok Link</label>
+                                <input type="text" class="form-control" id="modal-tiktok-input" name="modal-tiktok-input">
+                            </div>
+                            <div class="col-12">
+                                <label for="modal-instagram-input">Instagram Link</label>
+                                <input type="text" class="form-control" id="modal-instagram-input" name="modal-instagram-input">
+                            </div>
+                            <div class="col-12">
+                                <label for="modal-facebook-input">Facebook Link</label>
+                                <input type="text" class="form-control" id="modal-facebook-input" name="modal-facebook-input">
+                            </div>
+                        </div>
+                        <div class="row g-2 justify-centent-start mt-3">
+                            <div class="col-12 text-center h3 fw-bold">
+                                CHARACTER SEXY
+                            </div>
+                            <div class="row m-0 p-0 g-3">
+                                <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <span class="placeholder" style="width: 100%; max-height: 200px; height: calc(100vw * 0.5);"></span>
+                                    <img class="img-fluid preview" style="display: none; max-height: 200px;">
+                                    <input type="file" class="form-control" id="modal-character-sexy-1-input" name="modal-character-sexy-1-input" accept="image/*" hidden>
+                                    <button type="button" class="mt-1 btn btn-sm btn-dark select-character-btn">เลือกรูป Sexy 1</button>
+                                </div>
+                                <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <span class="placeholder" style="width: 100%; max-height: 200px; height: calc(100vw * 0.5);"></span>
+                                    <img class="img-fluid preview" style="display: none; max-height: 200px;">
+                                    <input type="file" class="form-control" id="modal-character-sexy-2-input" name="modal-character-sexy-2-input" accept="image/*" hidden>
+                                    <button type="button" class="mt-1 btn btn-sm btn-dark select-character-btn">เลือกรูป Sexy 2</button>
+                                </div>
+                                <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <span class="placeholder" style="width: 100%; max-height: 200px; height: calc(100vw * 0.5);"></span>
+                                    <img class="img-fluid preview" style="display: none; max-height: 200px;">
+                                    <input type="file" class="form-control" id="modal-character-sexy-3-input" name="modal-character-sexy-3-input" accept="image/*" hidden>
+                                    <button type="button" class="mt-1 btn btn-sm btn-dark select-character-btn">เลือกรูป Sexy 3</button>
+                                </div>
+                                <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <span class="placeholder" style="width: 100%; max-height: 200px; height: calc(100vw * 0.5);"></span>
+                                    <img class="img-fluid preview" style="display: none; max-height: 200px;">
+                                    <input type="file" class="form-control" id="modal-character-sexy-4-input" name="modal-character-sexy-4-input" accept="image/*" hidden>
+                                    <button type="button" class="mt-1 btn btn-sm btn-dark select-character-btn">เลือกรูป Sexy 4</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2 justify-centent-start mt-3">
+                            <div class="col-12 text-center h3 fw-bold">
+                                CHARACTER COMEDY
+                            </div>
+                            <div class="row m-0 p-0 g-3">
+                                <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <span class="placeholder" style="width: 100%; max-height: 200px; height: calc(100vw * 0.5);"></span>
+                                    <img class="img-fluid preview" style="display: none; max-height: 200px;">
+                                    <input type="file" class="form-control" id="modal-character-comedy-1-input" name="modal-character-comedy-1-input" accept="image/*" hidden>
+                                    <button type="button" class="mt-1 btn btn-sm btn-dark select-character-btn">เลือกรูป Comedy 1</button>
+                                </div>
+                                <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <span class="placeholder" style="width: 100%; max-height: 200px; height: calc(100vw * 0.5);"></span>
+                                    <img class="img-fluid preview" style="display: none; max-height: 200px;">
+                                    <input type="file" class="form-control" id="modal-character-comedy-2-input" name="modal-character-comedy-2-input" accept="image/*" hidden>
+                                    <button type="button" class="mt-1 btn btn-sm btn-dark select-character-btn">เลือกรูป Comedy 2</button>
+                                </div>
+                                <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <span class="placeholder" style="width: 100%; max-height: 200px; height: calc(100vw * 0.5);"></span>
+                                    <img class="img-fluid preview" style="display: none; max-height: 200px;">
+                                    <input type="file" class="form-control" id="modal-character-comedy-3-input" name="modal-character-comedy-3-input" accept="image/*" hidden>
+                                    <button type="button" class="mt-1 btn btn-sm btn-dark select-character-btn">เลือกรูป Comedy 3</button>
+                                </div>
+                                <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <span class="placeholder" style="width: 100%; max-height: 200px; height: calc(100vw * 0.5);"></span>
+                                    <img class="img-fluid preview" style="display: none; max-height: 200px;">
+                                    <input type="file" class="form-control" id="modal-character-comedy-4-input" name="modal-character-comedy-4-input" accept="image/*" hidden>
+                                    <button type="button" class="mt-1 btn btn-sm btn-dark select-character-btn">เลือกรูป Comedy 4</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2 justify-centent-start mt-3">
+                            <div class="col-12 text-center h3 fw-bold">
+                                CHARACTER Sweet
+                            </div>
+                            <div class="row m-0 p-0 g-3">
+                                <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <span class="placeholder" style="width: 100%; max-height: 200px; height: calc(100vw * 0.5);"></span>
+                                    <img class="img-fluid preview" style="display: none; max-height: 200px;">
+                                    <input type="file" class="form-control" id="modal-character-sweet-1-input" name="modal-character-sweet-1-input" accept="image/*" hidden>
+                                    <button type="button" class="mt-1 btn btn-sm btn-dark select-character-btn">เลือกรูป Sweet 1</button>
+                                </div>
+                                <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <span class="placeholder" style="width: 100%; max-height: 200px; height: calc(100vw * 0.5);"></span>
+                                    <img class="img-fluid preview" style="display: none; max-height: 200px;">
+                                    <input type="file" class="form-control" id="modal-character-sweet-2-input" name="modal-character-sweet-2-input" accept="image/*" hidden>
+                                    <button type="button" class="mt-1 btn btn-sm btn-dark select-character-btn">เลือกรูป Sweet 2</button>
+                                </div>
+                                <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <span class="placeholder" style="width: 100%; max-height: 200px; height: calc(100vw * 0.5);"></span>
+                                    <img class="img-fluid preview" style="display: none; max-height: 200px;">
+                                    <input type="file" class="form-control" id="modal-character-sweet-3-input" name="modal-character-sweet-3-input" accept="image/*" hidden>
+                                    <button type="button" class="mt-1 btn btn-sm btn-dark select-character-btn">เลือกรูป Sweet 3</button>
+                                </div>
+                                <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <span class="placeholder" style="width: 100%; max-height: 200px; height: calc(100vw * 0.5);"></span>
+                                    <img class="img-fluid preview" style="display: none; max-height: 200px;">
+                                    <input type="file" class="form-control" id="modal-character-sweet-4-input" name="modal-character-sweet-4-input" accept="image/*" hidden>
+                                    <button type="button" class="mt-1 btn btn-sm btn-dark select-character-btn">เลือกรูป Sweet 4</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2 justify-centent-start mt-3">
+                            <div class="col-12 text-center h3 fw-bold">
+                                CHARACTER Voice
+                            </div>
+                            <div class="row m-0 p-0 g-3">
+                                <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <label for="modal-character-voice-1-input">Voice 1</label>
+                                    <input type="text" class="form-control" id="modal-character-voice-1-input" name="modal-character-voice-1-input">
+                                </div>
+                                <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <label for="modal-character-voice-2-input">Voice 2</label>
+                                    <input type="text" class="form-control" id="modal-character-voice-2-input" name="modal-character-voice-2-input">
+                                </div>
+                                <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <label for="modal-character-voice-3-input">Voice 3</label>
+                                    <input type="text" class="form-control" id="modal-character-voice-3-input" name="modal-character-voice-3-input">
+                                </div>
+                                <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <label for="modal-character-voice-4-input">Voice 4</label>
+                                    <input type="text" class="form-control" id="modal-character-voice-4-input" name="modal-character-voice-4-input">
+                                </div>
+
+
+
+
+                                <!-- <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <span class="placeholder" style="width: 100%; max-height: 200px; height: calc(100vw * 0.5);"></span>
+                                    <img class="img-fluid preview" style="display: none; max-height: 200px;">
+                                    <input type="file" class="form-control" id="modal-character-voice-2-input" name="modal-character-voice-2-input" accept="image/*" hidden>
+                                    <button type="button" class="mt-1 btn btn-sm btn-dark select-character-btn">เลือกรูป Voice 2</button>
+                                </div>
+                                <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <span class="placeholder" style="width: 100%; max-height: 200px; height: calc(100vw * 0.5);"></span>
+                                    <img class="img-fluid preview" style="display: none; max-height: 200px;">
+                                    <input type="file" class="form-control" id="modal-character-voice-3-input" name="modal-character-voice-3-input" accept="image/*" hidden>
+                                    <button type="button" class="mt-1 btn btn-sm btn-dark select-character-btn">เลือกรูป Voice 3</button>
+                                </div>
+                                <div class="col-6 text-center d-flex flex-column justify-content-between g-3">
+                                    <span class="placeholder" style="width: 100%; max-height: 200px; height: calc(100vw * 0.5);"></span>
+                                    <img class="img-fluid preview" style="display: none; max-height: 200px;">
+                                    <input type="file" class="form-control" id="modal-character-voice-4-input" name="modal-character-voice-4-input" accept="image/*" hidden>
+                                    <button type="button" class="mt-1 btn btn-sm btn-dark select-character-btn">เลือกรูป Voice 4</button>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-3">
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary w-100">บันทึก</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- !!modal to add or update content data -->
+    <div class="modal fade" id="videoContentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="videoContentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #292929; color: #c88c84;">
+                    <h1 class="modal-title fs-5" id="videoContentModalLabel"></h1>
+                    <div data-bs-theme="dark">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div id="video-content-editor" style="min-height: 400px"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary w-25" id="videoContentModalBtn">บันทึก</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- !!modal to add or update note data -->
+    <div class="modal fade" id="videoNoteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="videoNoteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #292929; color: #7b5651;">
+                    <h1 class="modal-title fs-5" id="videoNoteModalLabel"></h1>
+                    <div data-bs-theme="dark">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div id="video-note-editor" style="min-height: 400px"></div>
+                    <div class="form-check mt-3 fs-3 fw-bold d-flex justify-content-center">
+                        <input class="form-check-input me-1 shadow text-bg-success" type="checkbox" value="" id="video-note-done">
+                        <label class="form-check-label text-success ms-1" for="flexCheckDefault">ทำแล้ว</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary w-25" id="videoNoteModalBtn">บันทึก</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- !!modal to add or update reference data -->
+    <div class="modal fade" id="photoReferenceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="photoReferenceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header" style="color: #fff; background-color: #b24f12;">
+                    <h1 class="modal-title fs-5" id="photoReferenceModalLabel"></h1>
+                    <div data-bs-theme="dark">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row" id="photo-reference-modal-div">
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control photo-reference-input photo-reference-input-template" placeholder="ใส่ลิ้งค์รูปภาพ">
+                                <label>ใส่ลิ้งค์รูปภาพ</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <button type="button" class="btn btn-primary w-100" id="photoReferenceModalAddBtn"><span class="bi bi-plus-circle"></span> เพิ่มรูปภาพ</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary w-25" id="photoReferenceModalBtn">บันทึก</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- !!modal to add or update file photo data -->
+    <div class="modal fade" id="photoFilePhotoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="photoFilePhotoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header" style="color: #fff; background-color: #b24f12;">
+                    <h1 class="modal-title fs-5" id="photoFilePhotoModalLabel"></h1>
+                    <div data-bs-theme="dark">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row" id="photo-file-photo-modal-div">
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control photo-file-photo-input photo-file-photo-input-template" placeholder="ใส่ลิ้งค์รูปภาพ">
+                                <label>ใส่ลิ้งค์รูปภาพ</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <button type="button" class="btn btn-primary w-100" id="photoFilePhotoModalAddBtn"><span class="bi bi-plus-circle"></span> เพิ่มรูปภาพ</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary w-25" id="photoFilePhotoModalBtn">บันทึก</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- !!modal to add or update on air data -->
+    <div class="modal fade" id="onAirModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="onAirModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header" style="color: #fff; background-color: #db7942;">
+                    <h1 class="modal-title fs-5" id="onAirModalLabel"></h1>
+                    <div data-bs-theme="dark">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row" id="onair-modal-div">
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="onair-channel-name" name="onair-channel-name" placeholder="ชื่อช่อง">
+                                <label>ชื่อช่อง</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="onair-clip-name" name="onair-clip-name" placeholder="ชื่อคลิป">
+                                <label>ชื่อคลิป</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check d-flex align-items-center">
+                                <input class="form-check-input me-2" type="checkbox" value="" id="onair-youtube-check" name="onair-youtube-check">
+                                <label class="form-check-label" for="onair-youtube-check">
+                                    <img src='./youtube.png' width="40px" />&nbsp;Youtube
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check d-flex align-items-center">
+                                <input class="form-check-input me-2" type="checkbox" value="" id="onair-facebook-check" name="onair-facebook-check">
+                                <label class="form-check-label" for="onair-facebook-check">
+                                    <img src='./facebook.png' width="40px" />&nbsp;Facebook
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check d-flex align-items-center">
+                                <input class="form-check-input me-2" type="checkbox" value="" id="onair-instagram-check" name="onair-instagram-check">
+                                <label class="form-check-label" for="onair-instagram-check">
+                                    <img src='./instagram.png' width="40px"/>&nbsp;Instagram
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check d-flex align-items-center">
+                                <input class="form-check-input me-2" type="checkbox" value="" id="onair-tiktok-check" name="onair-tiktok-check">
+                                <label class="form-check-label" for="onair-tiktok-check">
+                                    <img src="./tiktok.png" width="40px"/>&nbsp;Tiktok
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row mt-3">
+                        <div class="col">
+                            <button type="button" class="btn btn-primary w-100" id="onAirModalAddBtn"><span class="bi bi-plus-circle"></span> เพิ่มรายการ On Air</button>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary w-25" id="onAirModalBtn">บันทึก</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-mask-plugin@1.14.16/dist/jquery.mask.min.js"></script>
+    <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+    <script>
+        // VConsole will be exported to `window.VConsole` by default.
+        // var vConsole = new window.VConsole();
+    </script>
+</body>
+
+</html>
