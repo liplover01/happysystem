@@ -140,6 +140,7 @@ $(document).ready(function () {
                     uid: profile.userId
                 },
                 success: function (res) {
+                    console.log(res)
                     if (res.status == 'registed') {
                         localStorage.setItem('system_happy_login_status', profile.userId)
                         isAdmin = true
