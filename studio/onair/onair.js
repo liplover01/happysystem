@@ -775,8 +775,8 @@ function appendOnairData(date) {
       let tr = $('<tr>')
       tr.append($('<td>', { style: "max-width: 250px; min-width: 100px", class: "text-break" }).text(data.channel_name))
       tr.append($('<td>', { style: "max-width: 250px; min-width: 100px", class: "text-break" }).text(data.clip_name))
-      tr.append($('<td>', { style: 'min-width: 22px', class: 'text-center' }).text(data.facebook.toUpperCase() == 'TRUE' ? '✅' : ''))
       tr.append($('<td>', { style: 'min-width: 22px', class: 'text-center' }).text(data.youtube.toUpperCase() == 'TRUE' ? '✅' : ''))
+      tr.append($('<td>', { style: 'min-width: 22px', class: 'text-center' }).text(data.facebook.toUpperCase() == 'TRUE' ? '✅' : ''))
       tr.append($('<td>', { style: 'min-width: 22px', class: 'text-center' }).text(data.instagram.toUpperCase() == 'TRUE' ? '✅' : ''))
       tr.append($('<td>', { style: 'min-width: 22px', class: 'text-center' }).text(data.tiktok.toUpperCase() == 'TRUE' ? '✅' : ''))
       if(isAdmin){
