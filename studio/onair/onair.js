@@ -23,6 +23,7 @@ $(document).ready(() => {
 })
 
 async function onairSetCalendar(isupdate) {
+    console.log("🚀 ~ onairSetCalendar ~ isupdate:", isupdate)
     let sel_year = $('#onair-sel-year').val()
     console.log("🚀 ~ sel_year:", sel_year)
     let sel_month = $('#onair-sel-month').val()
