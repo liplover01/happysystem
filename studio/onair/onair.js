@@ -1,7 +1,3 @@
-$(document).ready(() => {
-    $('#onair-add-btn').click(function () {
-        let date = $('#onair-modal-div').attr('data-date')
-        let type = 'add'
   $(document).ready(() => {
     $('#onair-add-btn').click(function () {
         let date = $('#onair-modal-div').attr('data-date')
@@ -431,24 +427,7 @@ $(document).ready(() => {
             })
         }
     })
-  }      $('#onair-modal-div input').val('')
-        $('#onair-modal-div input[type=checkbox]').prop('checked', false)
-  
-        showModalToAddUpdateOnair(date, type)
-    })
-    $('#onAirModalBtn').click(function () {
-        let type = $('#onair-modal-div').attr('data-type')
-        console.log("🚀 ~ type:", type)
-        let date = $('#onair-modal-div').attr('data-date')
-        if (type == 'add') {
-            console.log('add');
-            onAirAddData(date)
-        } else {
-            console.log('update');
-            onAirUpdateData(date)
-        }
-    })
-  })
+  }      
   
   
   function showModalToAddUpdateOnair(date, type, id) {
