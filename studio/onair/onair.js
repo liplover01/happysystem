@@ -132,8 +132,8 @@
   
         $('#onair-date').text('วันที่ ' + text_date)
         $('#onair-tbody').empty()
-        let onair_index = calendar_data[$('#sel-year').val()][$('#sel-month').val()].findIndex(r => r[0] == date)
-        if (isAdmin && (onair_index < 0 || calendar_data[$('#sel-year').val()][$('#sel-month').val()][onair_index][6] == 'NO')) {
+        let onair_index = calendar_data[$('#sel-year').val()][$('#onair-sel-month').val()].findIndex(r => r[0] == date)
+        if (isAdmin && (onair_index < 0 || calendar_data[$('#onair-sel-year').val()][$('#onair-sel-month').val()][onair_index][6] == 'NO')) {
             // clearReferenceSection()
             Swal.fire({
                 icon: 'info',
@@ -147,7 +147,7 @@
                 }
             })
         } 
-        else if (!isAdmin && (onair_index < 0 || calendar_data[$('#sel-year').val()][$('#sel-month').val()][onair_index][6] == 'NO')) {
+        else if (!isAdmin && (onair_index < 0 || calendar_data[$('#onair-sel-year').val()][$('#onair-sel-month').val()][onair_index][6] == 'NO')) {
             // clearReferenceSection()
             Swal.fire({
                 icon: 'info',
@@ -159,7 +159,7 @@
             })
         } 
         else if(onair_index >= 0) {
-            if (calendar_data[$('#sel-year').val()][$('#sel-month').val()][onair_index][6] != "NO") {
+            if (calendar_data[$('#onair-sel-year').val()][$('#onair-sel-month').val()][onair_index][6] != "NO") {
                 $('#onair-modal-div').attr('data-date', date)
                 getOnAirData(date)
             }
