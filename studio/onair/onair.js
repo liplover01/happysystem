@@ -172,6 +172,8 @@ function schedule_onair_click(date) {
 
 function showModalToAddUpdateOnair(date, type, id) {
     $('#onair-modal-div').find('input').val('')
+    // clear checkbox
+    $('#onair-modal-div').find('input[type="checkbox"]').prop('checked', false)
     console.log('showmodal')
     console.log("🚀 ~ date:", date)
     $('#onair-modal-div').attr('data-type', type)
