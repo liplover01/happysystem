@@ -234,8 +234,11 @@
                     }
                     console.log("🚀 ~ onair_date:", onair_date)
                     let year = date.split('-')[0]
+                    console.log("🚀 ~ onAirAddData ~ year:", year)
                     let month = Number(date.split('-')[1])
+                    console.log("🚀 ~ onAirAddData ~ month:", month)
                     let calendar_index = calendar_data[year][month].findIndex(a => a[0] == date)
+                    console.log("🚀 ~ onAirAddData ~ calendar_index:", calendar_index)
                     if (calendar_index > -1) {
                         calendar_data[year][month][calendar_index][6] = "YES"
                     }
