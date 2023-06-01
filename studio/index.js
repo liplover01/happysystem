@@ -248,7 +248,7 @@ $(document).ready(() => {
     })
     $('#onair-sel-month, #onair-sel-year').change(function () {
         $.LoadingOverlay("show");
-        videoSetCalendar()
+        onairSetCalendar()
     })
     $('#sel-year, #photo-sel-year,  #onair-sel-year').val(new Date().getFullYear())
     $('#sel-month, #photo-sel-month,  #onair-sel-month').val(new Date().getMonth() + 1)
