@@ -1,11 +1,11 @@
-  $(document).ready(() => {
+$(document).ready(() => {
     $('#onair-add-btn').click(function () {
         let date = $('#onair-modal-div').attr('data-date')
         let type = 'add'
-  
+
         $('#onair-modal-div input').val('')
         $('#onair-modal-div input[type=checkbox]').prop('checked', false)
-  
+
         showModalToAddUpdateOnair(date, type)
     })
     $('#onAirModalBtn').click(function () {
@@ -20,9 +20,9 @@
             onAirUpdateData(date)
         }
     })
-  })
-  
-  async function onairSetCalendar() {
+})
+
+async function onairSetCalendar(isupdate) {
     let sel_year = $('#onair-sel-year').val()
     console.log("🚀 ~ sel_year:", sel_year)
     let sel_month = $('#onair-sel-month').val()
@@ -31,17 +31,19 @@
     if (!calendar_data) calendar_data = {}
     if (!calendar_data[sel_year]) calendar_data[sel_year] = {}
     $('#onair-calendar-sec').empty()
-    let loaddata = await $.ajax({
-        url: script_url,
-        type: 'POST',
-        data: {
-            opt: 'get_calendar_data',
-            month: sel_month - 1,
-            year: sel_year
-        }
-    })
-    console.log("🚀 ~ loaddata:", loaddata)
-    calendar_data[sel_year][sel_month] = loaddata.data
+    if (isupdate) {
+        let loaddata = await $.ajax({
+            url: script_url,
+            type: 'POST',
+            data: {
+                opt: 'get_calendar_data',
+                month: sel_month - 1,
+                year: sel_year
+            }
+        })
+        console.log("🚀 ~ loaddata:", loaddata)
+        calendar_data[sel_year][sel_month] = loaddata.data
+    }
     $.LoadingOverlay('hide')
     let today = new Date()
     let calendar_table = $('<table>', {
@@ -121,15 +123,15 @@
         schedule_onair_click(date)
     })
     console.log("🚀 ~ calendar_data:", calendar_data)
-  }
-  
-  function schedule_onair_click(date) {
+}
+
+function schedule_onair_click(date) {
     console.log("🚀 ~ date:", date)
     $('#schedule-onair-sec').fadeOut(150, function () {
         $('#onair-data-sec').fadeIn(150)
         let text_date = date.split('-')
         text_date = text_date[2] + '/' + text_date[1] + '/' + text_date[0]
-  
+
         $('#onair-date').text('วันที่ ' + text_date)
         $('#onair-tbody').empty()
         let onair_index = calendar_data[$('#sel-year').val()][$('#onair-sel-month').val()].findIndex(r => r[0] == date)
@@ -143,10 +145,10 @@
                 if (result.isConfirmed) {
                     showModalToAddUpdateOnair(date, 'add')
                     $('#onair-reference-modal-div').attr('data-type', 'add')
-  
+
                 }
             })
-        } 
+        }
         else if (!isAdmin && (onair_index < 0 || calendar_data[$('#onair-sel-year').val()][$('#onair-sel-month').val()][onair_index][6] == 'NO')) {
             // clearReferenceSection()
             Swal.fire({
@@ -157,17 +159,17 @@
             }).then((result) => {
                 $('#back-btn').click()
             })
-        } 
-        else if(onair_index >= 0) {
+        }
+        else if (onair_index >= 0) {
             if (calendar_data[$('#onair-sel-year').val()][$('#onair-sel-month').val()][onair_index][6] != "NO") {
                 $('#onair-modal-div').attr('data-date', date)
                 getOnAirData(date)
             }
         }
     })
-  }
-  
-  function showModalToAddUpdateOnair(date, type, id) {
+}
+
+function showModalToAddUpdateOnair(date, type, id) {
     $('#onair-modal-div').find('input').val('')
     console.log('showmodal')
     console.log("🚀 ~ date:", date)
@@ -181,19 +183,19 @@
         $('#onair-modal-div').attr('data-id', id)
         fillOnairDataToUpdate(date, id)
     }
-  
+
     $('#onAirModal').modal('show')
     $('#onAirModalLabel').text(title)
     console.log(onair_date)
-  }
-  
-  
-  
-  function clearOnairSection() {
+}
+
+
+
+function clearOnairSection() {
     // $('#photo-reference-sec').find('.reference-div').not('.reference-template').remove()
-  }
-  
-  function onAirAddData(date) {
+}
+
+function onAirAddData(date) {
     Swal.fire({
         icon: 'info',
         html: '<h2>กำลังเพิ่มรายการ On Air ใหม่<h2>',
@@ -203,8 +205,8 @@
             Swal.showLoading()
         }
     })
-  
-  
+
+
     $.ajax({
         method: 'POST',
         url: script_url,
@@ -241,21 +243,22 @@
                     console.log("🚀 ~ onAirAddData ~ calendar_index:", calendar_index)
                     if (calendar_index > -1) {
                         calendar_data[year][month][calendar_index][6] = "YES"
-                    }else{
+                    } else {
                         calendar_data[year][month].push([date, 'NO', 'NO', 'NO', 'NO', 'NO', 'YES'])
                     }
+                    onairSetCalendar(true)
                     appendOnairData(date)
                 })
             }
         }
     })
-  
-  
-  
-  
-  }
-  
-  function onAirUpdateData(date) {
+
+
+
+
+}
+
+function onAirUpdateData(date) {
     Swal.fire({
         icon: 'info',
         html: '<h2>กำลังแก้ไขรายการ On Air<h2>',
@@ -265,7 +268,7 @@
             Swal.showLoading()
         }
     })
-  
+
     let id = $('#onair-modal-div').attr('data-id')
     console.log("🚀 ~ id:", id)
     $.ajax({
@@ -304,24 +307,24 @@
                         onair_date[date][index].tiktok = res.data.tiktok
                     }
                     console.log("🚀 ~ onair_date:", onair_date)
-  
+
                     appendOnairData(date)
                 })
             }
         }
     })
-  
-  
-  
-  
-  
-  
-  
-  
-  }
-  
-  var onair_date = {}
-  function getOnAirData(date) {
+
+
+
+
+
+
+
+
+}
+
+var onair_date = {}
+function getOnAirData(date) {
     $.LoadingOverlay("show");
     $.ajax({
         method: 'POST',
@@ -340,11 +343,11 @@
             }
         }
     })
-  }
-  
-  
-  function appendOnairData(date) {
-    
+}
+
+
+function appendOnairData(date) {
+
     console.log("🚀 ~ onair_date:", onair_date)
     let tbody = $('<tbody>')
     onair_date[date].forEach((data, index) => {
@@ -356,19 +359,19 @@
         tr.append($('<td>', { style: 'min-width: 22px', class: 'text-center' }).text(data.facebook.toUpperCase() == 'TRUE' ? '✅' : ''))
         tr.append($('<td>', { style: 'min-width: 22px', class: 'text-center' }).text(data.instagram.toUpperCase() == 'TRUE' ? '✅' : ''))
         tr.append($('<td>', { style: 'min-width: 22px', class: 'text-center' }).text(data.tiktok.toUpperCase() == 'TRUE' ? '✅' : ''))
-        if(isAdmin){
+        if (isAdmin) {
             tr.append($('<td>', { style: 'min-width: 22px', class: 'text-center' }).append($('<button>', { class: 'btn btn-sm btn-warning', onclick: `showModalToAddUpdateOnair('${date}','update', '${data.id}')` }).html('<i class="bi bi-pencil"></i>')))
             tr.append($('<td>', { class: 'text-center' }).append($('<button>', { class: 'btn btn-sm btn-secondary', onclick: `onAirDeleteData('${date}', '${data.id}')` }).html('<i class="bi bi-trash"></i>')))
         }
         tbody.append(tr)
-  
+
     })
     $('#onair-tbody').empty().replaceWith(tbody)
     tbody.attr('id', 'onair-tbody')
-  
-  }
-  
-  function fillOnairDataToUpdate(date, id) {
+
+}
+
+function fillOnairDataToUpdate(date, id) {
     console.log("🚀 ~ id:", id)
     console.log("🚀 ~ date:", date)
     let data = onair_date[date].find((data) => {
@@ -380,9 +383,9 @@
     $('#onair-facebook-check').prop('checked', data.facebook == 'TRUE')
     $('#onair-instagram-check').prop('checked', data.instagram == 'TRUE')
     $('#onair-tiktok-check').prop('checked', data.tiktok == 'TRUE')
-  }
-  
-  function onAirDeleteData(date, id) {
+}
+
+function onAirDeleteData(date, id) {
     Swal.fire({
         title: 'คุณต้องการลบรายการนี้ใช่หรือไม่',
         showDenyButton: true,
@@ -432,10 +435,9 @@
             })
         }
     })
-  }      
-  
+}
 
-  
-  
-  
- 
+
+
+
+
