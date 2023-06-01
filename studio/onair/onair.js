@@ -32,7 +32,7 @@ async function onairSetCalendar(isupdate) {
     if (!calendar_data) calendar_data = {}
     if (!calendar_data[sel_year]) calendar_data[sel_year] = {}
     $('#onair-calendar-sec').empty()
-    if (isupdate) {
+    if (!isupdate) {
         let loaddata = await $.ajax({
             url: script_url,
             type: 'POST',
