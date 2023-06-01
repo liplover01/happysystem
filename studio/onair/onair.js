@@ -241,6 +241,8 @@
                     console.log("🚀 ~ onAirAddData ~ calendar_index:", calendar_index)
                     if (calendar_index > -1) {
                         calendar_data[year][month][calendar_index][6] = "YES"
+                    }else{
+                        calendar_data[year][month].push([date, 'NO', 'NO', 'NO', 'NO', 'NO', 'YES'])
                     }
                     appendOnairData(date)
                 })
