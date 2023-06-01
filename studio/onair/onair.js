@@ -432,87 +432,8 @@
     })
   }      
   
-  
-  function showModalToAddUpdateOnair(date, type, id) {
-    $('#onair-modal-div').find('input').val('')
-    console.log('showmodal')
-    console.log("🚀 ~ date:", date)
-    $('#onair-modal-div').attr('data-type', type)
-    $('#onair-modal-div').attr('data-date', date)
-    let title
-    if (type == 'add') {
-        title = 'เพิ่มรายการ On Air'
-    } else {
-        title = 'แก้ไขรายการ On Air'
-        $('#onair-modal-div').attr('data-id', id)
-        fillOnairDataToUpdate(date, id)
-    }
-  
-    $('#onAirModal').modal('show')
-    $('#onAirModalLabel').text(title)
-    console.log(onair_date)
-  }
+
   
   
   
-  function clearOnairSection() {
-    // $('#photo-reference-sec').find('.reference-div').not('.reference-template').remove()
-  }
-  
-  function onAirAddData(date) {
-    Swal.fire({
-        icon: 'info',
-        html: '<h2>กำลังเพิ่มรายการ On Air ใหม่<h2>',
-        showConfirmButton: false,
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading()
-        }
-    })
-  
-  
-    $.ajax({
-        method: 'POST',
-        url: script_url,
-        data: {
-            opt: 'add_onair_data',
-            date: date,
-            channel_name: $('#onair-channel-name').val(),
-            clip_name: $('#onair-clip-name').val(),
-            youtube: $('#onair-youtube-check').is(':checked'),
-            facebook: $('#onair-facebook-check').is(':checked'),
-            instagram: $('#onair-instagram-check').is(':checked'),
-            tiktok: $('#onair-tiktok-check').is(':checked'),
-        },
-        success: function (res) {
-            console.log("🚀 ~ res:", res);
-            if (res.status == 'success') {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'เพิ่มรายการ On Air สำเร็จ',
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(() => {
-                    $('#onAirModal').modal('hide')
-                    if (!onair_date[date]) onair_date[date] = []
-                    if (res.data) {
-                        onair_date[date].push({ id: res.id, channel_name: res.data.channel_name, clip_name: res.data.clip_name, youtube: res.data.youtube, facebook: res.data.facebook, instagram: res.data.instagram, tiktok: res.data.tiktok })
-                    }
-                    console.log("🚀 ~ onair_date:", onair_date)
-                    let year = date.split('-')[0]
-                    let month = Number(date.split('-')[1])
-                    let calendar_index = calendar_data[year][month].findIndex(a => a[0] == date)
-                    if (calendar_index > -1) {
-                        calendar_data[year][month][calendar_index][6] = "YES"
-                    }
-                    appendOnairData(date)
-                })
-            }
-        }
-    })
-  
-  
-  
-  
-  }
  
