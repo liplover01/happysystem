@@ -1,4 +1,4 @@
-async function photoSetCalendar() {
+async function photoSetCalendar(isupdate) {
     let sel_year = $('#photo-sel-year').val()
     console.log("🚀 ~ sel_year:", sel_year)
     let sel_month = $('#photo-sel-month').val()
@@ -7,17 +7,20 @@ async function photoSetCalendar() {
     if (!calendar_data) calendar_data = {}
     if (!calendar_data[sel_year]) calendar_data[sel_year] = {}
     $('#photo-calendar-sec').empty()
-    let loaddata = await $.ajax({
-        url: script_url,
-        type: 'POST',
-        data: {
-            opt: 'get_calendar_data',
-            month: sel_month - 1,
-            year: sel_year
-        }
-    })
-    console.log("🚀 ~ loaddata:", loaddata)
-    calendar_data[sel_year][sel_month] = loaddata.data
+    if(!isupdate){
+        let loaddata = await $.ajax({
+            url: script_url,
+            type: 'POST',
+            data: {
+                opt: 'get_calendar_data',
+                month: sel_month - 1,
+                year: sel_year
+            }
+        })
+        console.log("🚀 ~ loaddata:", loaddata)
+        calendar_data[sel_year][sel_month] = loaddata.data
+    }
+    
     $.LoadingOverlay('hide')
     let today = new Date()
     let calendar_table = $('<table>', {
